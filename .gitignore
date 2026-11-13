@@ -1,0 +1,12 @@
+# Secrets
+.env
+
+# Runtime data (leads, rate-limit locks, logs)
+data/*
+!data/.gitkeep
+
+# Local scratch
+tmp/
+node_modules/
+*.log
+.openchamber/

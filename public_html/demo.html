@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistant - static HTML demo</title>
+<style>
+  body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; background: #f4f7f8; color: #16303a; }
+  main { max-width: 760px; margin: 0 auto; padding: 56px 24px 120px; }
+  h1 { font-size: 26px; margin: 0 0 10px; }
+  p { line-height: 1.65; color: #4a6470; }
+  pre { background: #0f2027; color: #d6e6ec; padding: 18px; border-radius: 10px; overflow-x: auto; font-size: 13px; line-height: 1.55; }
+  code { background: #e6eef1; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Static HTML integration</h1>
+  <p>Use this when the site is not PHP. Copy the three tags below into the page (before <code>&lt;/body&gt;</code>)
+  and point <code>apiChat</code> at the deployed <code>api/bot/chat.php</code>.</p>
+
+  <pre>&lt;script&gt;
+  window.BOT_WIDGET_CONFIG = {
+    brandName: "Your Company",
+    assistantName: "Ava",
+    subtitle: "AI Assistant",
+    avatar: "/assets/img/bot-avatar.svg",
+    primaryColor: "#004d40",
+    accentColor: "#c6a15b",
+    apiChat: "/api/bot/chat.php",
+    lang: document.documentElement.lang || "en",
+    position: "left"
+  };
+&lt;/script&gt;
+&lt;link rel="stylesheet" href="/assets/css/bot-widget.css"&gt;
+&lt;script src="/assets/js/bot-widget.js" defer&gt;&lt;/script&gt;</pre>
+</main>
+
+<!-- The live widget, configured exactly like the snippet above. -->
+<script>
+  window.BOT_WIDGET_CONFIG = {
+    brandName: 'Your Company',
+    assistantName: 'Ava',
+    subtitle: 'AI Assistant',
+    avatar: 'assets/img/bot-avatar.svg',
+    primaryColor: '#004d40',
+    accentColor: '#c6a15b',
+    apiChat: 'api/bot/chat.php',
+    lang: 'en',
+    position: 'left'
+  };
+</script>
+<link rel="stylesheet" href="assets/css/bot-widget.css">
+<script src="assets/js/bot-widget.js" defer></script>
+</body>
+</html>

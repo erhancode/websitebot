@@ -85,7 +85,7 @@ Everything lives in `.env` (see `.env.example`) or `config/bot_config.php`.
 | AI | `AI_API_KEY`, `AI_BASE_URL`, `AI_MODEL`, `AI_MAX_TOKENS`, `AI_TEMPERATURE`, `AI_TIMEOUT`, `AI_SSL_VERIFY` |
 | Branding | `BOT_BRAND_NAME`, `BOT_ASSISTANT_NAME`, `BOT_ASSISTANT_ROLE`, `BOT_SUBTITLE`, `BOT_AVATAR`, `BOT_COLOR_PRIMARY`, `BOT_COLOR_ACCENT` |
 | Widget | `BOT_DEFAULT_LANG`, `BOT_POSITION`, `BOT_AUTO_OPEN`, `BOT_OPEN_DELAY`, `BOT_MAX_INPUT`, `BOT_ASSET_BASE`, `BOT_API_BASE`, `BOT_CORS_ORIGIN` |
-| Leads | `BOT_STORE_LEADS`, `LEAD_NOTIFY_EMAIL`, `BOT_INTERNAL_KEY`, `BOT_RATE_LIMIT`, `BOT_RATE_WINDOW`, `BOT_LEAD_DEDUPE`, `BOT_KEEP_LEADS` |
+| Leads | `BOT_STORE_LEADS`, `LEAD_NOTIFY_EMAIL`, `BOT_INTERNAL_KEY`, `BOT_RATE_LIMIT`, `BOT_RATE_WINDOW`, `BOT_TRUST_PROXY`, `BOT_LEAD_DEDUPE`, `BOT_KEEP_LEADS` |
 | Mail | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `FROM_EMAIL`, `FROM_NAME` |
 | Prompt | `BOT_EXTRA_PROMPT` (appends rules), `BOT_SYSTEM_PROMPT` (replaces the generated prompt) |
 
@@ -156,6 +156,24 @@ $env:AI_BASE_URL='http://127.0.0.1:8124/v1'; $env:AI_API_KEY='test'; php -S 127.
 - `.env` is git-ignored; no credentials are shipped in the repository.
 - `lead.php` refuses every request until `BOT_INTERNAL_KEY` is set.
 - `AI_SSL_VERIFY=true` by default — only disable it for a self-signed internal endpoint.
+
+## Hosting behind Cloudflare
+
+Cloudflare can sit in front of the PHP host as DNS proxy, CDN and WAF, but it cannot
+run this backend itself: Pages and Workers serve static files and JavaScript, not PHP.
+`core/`, `config/`, `data/` and `api/bot/*.php` still need a normal PHP host.
+
+- Set `BOT_TRUST_PROXY=true`. Without it every request reaches PHP from a Cloudflare
+  IP and all visitors share one rate-limit bucket.
+- SSL/TLS mode **Full (strict)** — *Flexible* causes redirect loops.
+- Add a Cloudflare rate-limiting rule on `/api/bot/chat.php` (for example 30 requests
+  per minute per IP) as a second layer in front of the built-in limiter.
+- Cache `/assets/*` aggressively and bypass cache for `/api/bot/*`; chat traffic is
+  `POST` and must never be cached.
+- Widget and API on different origins? Set `BOT_CORS_ORIGIN=https://yoursite.com` and
+  absolute `BOT_ASSET_BASE` / `BOT_API_BASE` URLs.
+- For heavy abuse, add a Turnstile check in front of `chat.php`. It is not built in;
+  the rate limit plus WAF rules cover normal sites.
 
 ## License
 

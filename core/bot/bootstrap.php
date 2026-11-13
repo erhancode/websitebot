@@ -126,9 +126,37 @@ if (!function_exists('bot_json_input')) {
 }
 
 if (!function_exists('bot_client_ip')) {
+    /**
+     * Visitor IP used for rate limiting.
+     *
+     * When BOT_TRUST_PROXY is on, the proxy headers Cloudflare / nginx set are
+     * used first. Only enable it when the site really sits behind a proxy you
+     * control, otherwise a client could spoof the header.
+     */
     function bot_client_ip(): string
     {
-        return (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        $remote = (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+
+        if (!filter_var(bot_config('leads.trust_proxy', false), FILTER_VALIDATE_BOOLEAN)) {
+            return $remote;
+        }
+
+        $candidates = [
+            $_SERVER['HTTP_CF_CONNECTING_IP'] ?? '',   // Cloudflare
+            $_SERVER['HTTP_X_REAL_IP'] ?? '',          // nginx
+            $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '',    // last resort, first hop
+        ];
+
+        foreach ($candidates as $value) {
+            foreach (explode(',', (string) $value) as $ip) {
+                $ip = trim($ip);
+                if (filter_var($ip, FILTER_VALIDATE_IP)) {
+                    return $ip;
+                }
+            }
+        }
+
+        return $remote;
     }
 }
 

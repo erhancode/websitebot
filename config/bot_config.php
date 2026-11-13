@@ -87,6 +87,9 @@ return [
         'internal_key'    => bot_env('BOT_INTERNAL_KEY', ''),
         'rate_limit'      => (int) bot_env('BOT_RATE_LIMIT', 20),   // requests...
         'rate_window'     => (int) bot_env('BOT_RATE_WINDOW', 60),  // ...per seconds
+        // Behind Cloudflare or another reverse proxy, set this to true so the
+        // limiter uses the real visitor IP instead of the proxy address.
+        'trust_proxy'     => filter_var(bot_env('BOT_TRUST_PROXY', 'false'), FILTER_VALIDATE_BOOLEAN),
         'dedupe_seconds'  => (int) bot_env('BOT_LEAD_DEDUPE', 600),
         'keep_records'    => (int) bot_env('BOT_KEEP_LEADS', 2000),
     ],

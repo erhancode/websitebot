@@ -8,7 +8,7 @@
  *   window.BOT_WIDGET_CONFIG = {
  *     brandName, assistantName, subtitle, avatar, primaryColor, accentColor,
  *     apiChat, lang, position, autoOpen, openDelay, scrollThreshold,
- *     maxHistory, maxInput, showLauncher, hideSelectors, bannerClass,
+ *     maxHistory, maxInput, showLauncher, hideSelectors,
  *     strings: { en: { welcome: '...' } }   // per-language overrides
  *   }
  *
@@ -20,8 +20,8 @@
 
     var DEFAULTS = {
         brandName: 'Your Company',
-        assistantName: 'Ava',
-        subtitle: 'AI Assistant',
+        assistantName: 'Assistant',
+        subtitle: 'AI assistant',
         avatar: '/assets/img/bot-avatar.svg',
         primaryColor: '#004d40',
         accentColor: '#c6a15b',
@@ -34,8 +34,7 @@
         maxHistory: 6,
         maxInput: 1000,
         showLauncher: true,
-        hideSelectors: ['.floating-social'],
-        bannerClass: 'cc-active',
+        hideSelectors: [],
         strings: {}
     };
 

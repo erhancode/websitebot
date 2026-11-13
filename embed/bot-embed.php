@@ -17,8 +17,8 @@ $botLang = isset($botLang) && is_string($botLang) && $botLang !== ''
 
 $botWidgetConfig = [
     'brandName'       => (string) bot_config('brand.name', 'Your Company'),
-    'assistantName'   => (string) bot_config('brand.assistant', 'Ava'),
-    'subtitle'        => (string) bot_config('brand.subtitle', 'AI Assistant'),
+    'assistantName'   => (string) bot_config('brand.assistant', 'Assistant'),
+    'subtitle'        => (string) bot_config('brand.subtitle', 'AI assistant'),
     'avatar'          => bot_avatar_url(),
     'primaryColor'    => (string) bot_config('brand.color', '#004d40'),
     'accentColor'     => (string) bot_config('brand.color_accent', '#c6a15b'),
@@ -32,7 +32,6 @@ $botWidgetConfig = [
     'maxInput'        => (int) bot_config('widget.max_input', 1000),
     'showLauncher'    => (bool) bot_config('widget.show_launcher', true),
     'hideSelectors'   => (array) bot_config('widget.hide_selectors', []),
-    'bannerClass'     => (string) bot_config('widget.banner_class', 'cc-active'),
 ];
 
 $botAsset   = bot_asset_base();

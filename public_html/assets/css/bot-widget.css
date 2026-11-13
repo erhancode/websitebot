@@ -281,8 +281,7 @@
     bottom: 24px;
 }
 
-.botw-banner-open #botw-widget,
-.cc-active #botw-widget {
+.botw-banner-open #botw-widget {
     bottom: 140px;
 }
 
@@ -297,7 +296,6 @@
         right: 12px;
     }
 
-    .cc-active #botw-widget,
     .botw-banner-open #botw-widget {
         bottom: 130px;
     }

@@ -31,7 +31,7 @@ return [
     'ai' => [
         'base_url'     => rtrim((string) bot_env('AI_BASE_URL', 'https://api.groq.com/openai/v1'), '/'),
         'model'        => bot_env('AI_MODEL', 'qwen/qwen3.8-27b'),
-        'api_key'      => bot_env('AI_API_KEY', bot_env('GROQ_API_KEY', '')),
+        'api_key'      => bot_env('AI_API_KEY', ''),
         'max_tokens'   => (int) bot_env('AI_MAX_TOKENS', 250),
         'temperature'  => (float) bot_env('AI_TEMPERATURE', 0.5),
         'timeout'      => (int) bot_env('AI_TIMEOUT', 20),
@@ -64,10 +64,8 @@ return [
         'max_history'      => (int) bot_env('BOT_MAX_HISTORY', 6),
         'max_input'        => (int) bot_env('BOT_MAX_INPUT', 1000),
         'show_launcher'    => filter_var(bot_env('BOT_SHOW_LAUNCHER', 'true'), FILTER_VALIDATE_BOOLEAN),
-        // Elements the widget hides while the chat is open (source-site cleanup).
-        'hide_selectors'   => ['.floating-social'],
-        // Body class that pushes the launcher up while a cookie banner shows.
-        'banner_class'     => 'cc-active',
+        // Elements the widget hides while the chat is open.
+        'hide_selectors'   => [],
         // URL bases. Set these when the site lives in a subdirectory.
         'asset_base'       => rtrim((string) bot_env('BOT_ASSET_BASE', '/assets/'), '/') . '/',
         'api_base'         => rtrim((string) bot_env('BOT_API_BASE', '/api/bot'), '/') . '/',
